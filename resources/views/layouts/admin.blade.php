@@ -15,6 +15,14 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
+        @if (Session::has('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('message') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
             <div class="">
@@ -27,26 +35,17 @@
                                 </a>
                                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.roles.index') }}" class="nav-link align-middle px-0">
+                                        <x-admin-links :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.index')" class="nav-link align-middle px-0">
                                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Roles</span>
-                                        </a>
+                                        </x-admin-links>
                                     </li>
                                     <li>
-                                        <a href="{{ route('admin.permissions.index') }}" class="nav-link px-0 align-middle">
-                                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Permissions</span></a>
+                                        <x-admin-links :href="route('admin.permissions.index')" :active="request()->routeIs('admin.permissions.index')" class="nav-link px-0 align-middle">
+                                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Permissions</span></x-admin-links>
                                     </li>
                                     <li>
-                                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>
-                                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                                            <li class="w-100">
-                                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                        <x-admin-links :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')" class="nav-link px-0 align-middle">
+                                            <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Users</span></x-admin-links>
                                     <li>
                                         <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                             <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products</span> </a>
@@ -65,7 +64,7 @@
                                             </li>
                                         </ul>
                                     </li>
-        
+
                                 </ul>
                                 <hr>
                                 <div class="dropdown">
@@ -76,7 +75,7 @@
                                       <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
-                
+
                                             <x-dropdown-link class="dropdown-item text-white" :href="route('logout')"
                                                     onclick="event.preventDefault();
                                                                 this.closest('form').submit();">
@@ -98,7 +97,7 @@
                 </div>
             </div>
             <!-- Page Content -->
-    
+
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
